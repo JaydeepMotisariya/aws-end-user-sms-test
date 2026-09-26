@@ -12,7 +12,7 @@ This project allows a developer to:
 
 The project intentionally keeps AWS credentials out of the source code and uses the AWS SDK default credential provider chain.
 
-![AWS SMS Tester](docs/aws-sms-tester.jpg)
+![AWS SMS Tester](docs/aws-sms-tester.png)
 
 Contributions are welcome. Feel free to improve the app, fix a bug, or make the setup clearer. Everyone is invited to take part.
 
@@ -20,23 +20,33 @@ Contributions are welcome. Feel free to improve the app, fix a bug, or make the 
 
 ## Architecture
 
-```text
-Browser
-   ↓
-Next.js UI
-   ↓
-POST /api/send-sms
-   ↓
-Next.js Server API Route
-   ↓
-AWS SDK
-   ↓
-AWS End User Messaging SMS
-   ↓
-Destination Phone
+```mermaid
+flowchart TD
+    browser["Browser"]
+    ui["Next.js UI"]
+    api["POST /api/send-sms"]
+    route["Next.js server API route"]
+    sdk["AWS SDK v3"]
+    sms["AWS End User Messaging SMS"]
+    phone["Destination phone"]
+
+    browser --> ui
+    ui -->|"phone number and message only"| api
+    api --> route
+    route --> sdk
+    sdk -->|"SendTextMessage"| sms
+    sms --> phone
+
+    classDef client fill:#eef4ff,stroke:#4f6fe8,color:#0f172a,stroke-width:1.5px
+    classDef server fill:#ffffff,stroke:#2f6bff,color:#0f172a,stroke-width:1.5px
+    classDef aws fill:#fff8ef,stroke:#e2871a,color:#0f172a,stroke-width:1.5px
+
+    class browser,ui client
+    class api,route,sdk server
+    class sms,phone aws
 ```
 
-AWS SDK calls must run only on the server side. AWS credentials must never be exposed to the browser.
+The browser never talks to AWS directly. It only sends the destination phone number and message to `POST /api/send-sms`. The AWS SDK runs in the server route and uses the default credential chain. Credentials and the origination number stay on the server.
 
 ---
 
