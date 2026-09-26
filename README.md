@@ -12,6 +12,10 @@ This project allows a developer to:
 
 The project intentionally keeps AWS credentials out of the source code and uses the AWS SDK default credential provider chain.
 
+![AWS SMS Tester](docs/aws-sms-tester.jpg)
+
+Contributions are welcome. Feel free to improve the app, fix a bug, or make the setup clearer. Everyone is invited to take part.
+
 ---
 
 ## Architecture
@@ -904,7 +908,29 @@ Enter the verified destination phone number and send a test message.
 
 ---
 
-## 23. Important Notes
+## 23. Contributing
+
+This project is open, and contributions are welcome from everyone.
+
+Feel free to:
+
+- Improve the user interface
+- Fix bugs
+- Clarify the setup steps
+- Suggest a better way to test AWS End User Messaging SMS
+
+To contribute:
+
+1. Fork the repository.
+2. Create a branch for your change.
+3. Keep AWS credentials out of the code and out of Git. Do not commit `.env.local`.
+4. Open a pull request and describe what you changed and why.
+
+Questions, ideas, and small improvements are all welcome.
+
+---
+
+## 24. Important Notes
 
 - This repository is intended for local SMS integration testing.
 - Do not store real AWS credentials in this repository.
